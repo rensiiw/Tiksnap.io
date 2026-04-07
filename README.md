@@ -2,502 +2,455 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>TikSnap.io - Maintenance</title>
     <meta name="theme-color" content="#0a0f0d">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --bg: #0a0f0d;
-            --card: #111916;
+            --bg-card: #0d1411;
             --border: #1e2d27;
             --text: #f0f5f2;
-            --text-muted: #6b8f7d;
+            --text-muted: #7a9a8a;
             --accent: #10b981;
             --accent-light: #34d399;
             --gold: #d4af37;
-            --gold-light: #f4d03f;
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
+            min-height: 100dvh; /* Dynamic viewport height for mobile */
             overflow-x: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            padding: 16px;
         }
 
-        /* Background Effects */
+        /* Background Grid */
         .bg-grid {
             position: fixed;
             inset: 0;
             background-image: 
-                linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
+                linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
             z-index: 0;
+            mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 80%);
         }
 
+        /* Glows - Positioned to look good on mobile */
         .bg-glow {
             position: fixed;
-            width: 600px;
-            height: 600px;
             border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.4;
+            filter: blur(80px);
+            opacity: 0.3;
             z-index: 0;
-            animation: floatGlow 20s ease-in-out infinite;
-        }
-
-        .glow-1 {
-            background: linear-gradient(135deg, var(--accent), var(--gold));
-            top: -200px;
-            right: -200px;
-        }
-
-        .glow-2 {
-            background: var(--accent);
-            bottom: -300px;
-            left: -200px;
-            animation-delay: -10s;
-        }
-
-        @keyframes floatGlow {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(50px, -30px) scale(1.1); }
-        }
-
-        /* Particles */
-        .particles {
-            position: fixed;
-            inset: 0;
-            z-index: 1;
             pointer-events: none;
         }
+        .glow-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            top: -100px;
+            right: -50px;
+        }
+        .glow-2 {
+            width: 250px;
+            height: 250px;
+            background: var(--gold);
+            bottom: -50px;
+            left: -50px;
+        }
 
+        /* Particles Container */
+        .particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
             background: var(--accent);
             border-radius: 50%;
             opacity: 0;
-            animation: particleFloat 8s ease-in-out infinite;
+            animation: floatUp 10s linear infinite;
         }
-
-        @keyframes particleFloat {
-            0% { opacity: 0; transform: translateY(100vh) scale(0); }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { opacity: 0; transform: translateY(-100px) scale(1); }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            100% { transform: translateY(-20px) scale(1); opacity: 0; }
         }
 
         /* Main Container */
         .container {
             position: relative;
             z-index: 10;
-            text-align: center;
-            padding: 20px;
-            max-width: 600px;
+            width: 100%;
+            max-width: 400px;
         }
 
-        /* Logo */
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
         .logo {
-            width: 100px;
-            height: 100px;
+            width: 70px;
+            height: 70px;
             background: linear-gradient(135deg, var(--accent), var(--gold));
-            border-radius: 28px;
+            border-radius: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 30px;
-            box-shadow: 0 20px 60px -15px rgba(16, 185, 129, 0.5);
-            animation: logoPulse 3s ease-in-out infinite;
+            margin: 0 auto 16px;
+            box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.4);
+            animation: logoFloat 4s ease-in-out infinite;
         }
-
-        @keyframes logoPulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 20px 60px -15px rgba(16, 185, 129, 0.5); }
-            50% { transform: scale(1.05); box-shadow: 0 25px 70px -15px rgba(16, 185, 129, 0.7); }
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
         }
+        .logo svg { width: 36px; height: 36px; stroke: white; stroke-width: 2.5; }
 
-        .logo svg {
-            width: 50px;
-            height: 50px;
-        }
-
-        /* Title */
         .title {
-            font-size: 3rem;
-            font-weight: 900;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--text), var(--accent-light));
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text) 0%, var(--accent-light) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
+            line-height: 1.2;
         }
 
         .subtitle {
-            font-size: 1.1rem;
+            font-size: 0.85rem;
             color: var(--text-muted);
-            margin-bottom: 40px;
+            margin-top: 4px;
         }
 
         /* Status Badge */
         .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             background: rgba(212, 175, 55, 0.1);
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            padding: 12px 24px;
-            border-radius: 50px;
-            margin-bottom: 40px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 8px 16px;
+            border-radius: 100px;
+            margin-top: 14px;
+            font-size: 0.75rem;
             font-weight: 600;
-            color: var(--gold);
+            color: var(--gold-light);
         }
-
         .status-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             background: var(--gold);
             border-radius: 50%;
-            animation: blink 1.5s ease-in-out infinite;
+            animation: pulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
         }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            50% { transform: scale(1.2); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0); }
         }
 
         /* Card */
         .card {
-            background: linear-gradient(165deg, rgba(17, 25, 22, 0.9), rgba(13, 20, 17, 0.95));
+            background: linear-gradient(180deg, rgba(17, 25, 22, 0.95), rgba(10, 15, 13, 0.98));
             border: 1px solid var(--border);
             border-radius: 24px;
-            padding: 40px 30px;
-            backdrop-filter: blur(20px);
-            box-shadow: 0 40px 80px -20px rgba(0, 0, 0, 0.5);
+            padding: 24px 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.5);
         }
 
-        /* Message */
+        /* Message Content */
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .message-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
         .message-title {
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 700;
-            margin-bottom: 20px;
             color: var(--accent-light);
         }
 
         .message-text {
+            font-size: 0.9rem;
             color: var(--text-muted);
-            line-height: 1.8;
-            margin-bottom: 30px;
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
+        .message-text strong { color: var(--text); }
+        .highlight { color: var(--gold); font-weight: 600; }
 
-        /* Progress */
-        .progress-container {
+        /* Progress Bar */
+        .progress-box {
             background: var(--bg);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 30px;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 20px;
         }
-
-        .progress-label {
+        .progress-top {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 0.8rem;
+            font-weight: 500;
         }
-
-        .progress-bar {
-            height: 8px;
+        .progress-track {
+            height: 6px;
             background: var(--border);
-            border-radius: 4px;
+            border-radius: 10px;
             overflow: hidden;
         }
-
         .progress-fill {
             height: 100%;
             width: 0%;
             background: linear-gradient(90deg, var(--accent), var(--gold));
-            border-radius: 4px;
-            animation: progressAnim 3s ease-out forwards;
+            border-radius: 10px;
+            animation: loadProgress 2.5s ease-out forwards;
         }
+        @keyframes loadProgress { to { width: 75%; } }
 
-        @keyframes progressAnim {
-            0% { width: 0%; }
-            100% { width: 75%; }
+        /* Features List (Stacked Vertically for Mobile) */
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
         }
-
-        /* Feature List */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
         .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
             background: var(--bg);
+            padding: 12px;
+            border-radius: 12px;
             border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 15px 10px;
-            transition: all 0.3s ease;
         }
-
-        .feature-item:hover {
-            border-color: var(--accent);
-            transform: translateY(-3px);
-        }
-
         .feature-icon {
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(212, 175, 55, 0.1));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
         }
-
         .feature-text {
-            font-size: 0.75rem;
-            color: var(--text-muted);
+            font-size: 0.85rem;
             font-weight: 500;
         }
-
-        /* Admin Section */
-        .admin-section {
-            border-top: 1px solid var(--border);
-            padding-top: 25px;
-            margin-top: 10px;
+        .feature-status {
+            margin-left: auto;
+            font-size: 0.7rem;
+            color: var(--gold);
+            background: rgba(212, 175, 55, 0.1);
+            padding: 4px 8px;
+            border-radius: 6px;
         }
 
-        .admin-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 15px;
-        }
-
-        .admin-card {
-            display: inline-flex;
-            align-items: center;
-            gap: 15px;
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(212, 175, 55, 0.1));
+        /* Admin Card */
+        .admin-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.05), rgba(212, 175, 55, 0.05));
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 15px 25px;
+            padding: 14px;
+            text-align: center;
         }
-
+        .admin-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
         .admin-avatar {
-            width: 50px;
-            height: 50px;
+            width: 42px;
+            height: 42px;
             background: linear-gradient(135deg, var(--accent), var(--gold));
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px -3px rgba(16, 185, 129, 0.3);
         }
-
-        .admin-info {
-            text-align: left;
-        }
-
-        .admin-name {
-            font-weight: 700;
-            font-size: 1rem;
-        }
-
-        .admin-role {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
+        .admin-info { text-align: left; }
+        .admin-name { font-weight: 700; font-size: 0.9rem; line-height: 1.2; }
+        .admin-role { font-size: 0.7rem; color: var(--text-muted); }
 
         /* Footer */
         .footer {
-            margin-top: 40px;
-            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.75rem;
             color: var(--text-muted);
         }
-
         .footer a {
             color: var(--accent);
             text-decoration: none;
             font-weight: 600;
         }
 
-        .footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 640px) {
-            .title { font-size: 2rem; }
-            .features { grid-template-columns: 1fr; }
-            .card { padding: 30px 20px; }
-        }
-
-        /* Typing Animation */
-        .typing-text {
-            border-right: 2px solid var(--accent);
-            animation: cursorBlink 0.8s step-end infinite;
-            padding-right: 5px;
-        }
-
-        @keyframes cursorBlink {
-            0%, 100% { border-color: var(--accent); }
-            50% { border-color: transparent; }
+        /* Desktop Optimization */
+        @media (min-width: 768px) {
+            .logo { width: 90px; height: 90px; margin-bottom: 20px; }
+            .title { font-size: 2.5rem; }
+            .subtitle { font-size: 1rem; }
+            .card { padding: 30px; }
+            .features-list { flex-direction: row; }
+            .feature-item { flex-direction: column; text-align: center; justify-content: center; }
+            .feature-status { margin-left: 0; margin-top: 5px; }
         }
     </style>
 </head>
 <body>
-    <!-- Background Effects -->
     <div class="bg-grid"></div>
     <div class="bg-glow glow-1"></div>
     <div class="bg-glow glow-2"></div>
-    
-    <!-- Particles -->
     <div class="particles" id="particles"></div>
 
-    <!-- Main Content -->
     <div class="container">
-        <!-- Logo -->
-        <div class="logo">
-            <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
-                <polygon points="5 3 19 12 5 21 5 3"></polygon>
-            </svg>
-        </div>
-
-        <!-- Title -->
-        <h1 class="title">TikSnap.io</h1>
-        <p class="subtitle">TikTok Video, Sound & Photo Downloader</p>
-
-        <!-- Status Badge -->
-        <div class="status-badge">
-            <span class="status-dot"></span>
-            <span>SEDANG DALAM PERBAIKAN</span>
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+            </div>
+            <h1 class="title">TikSnap.io</h1>
+            <p class="subtitle">TikTok Downloader</p>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                SEDANG PERBAIKAN
+            </div>
         </div>
 
         <!-- Main Card -->
         <div class="card">
-            <h2 class="message-title">Pengumuman dari Admin</h2>
-            
+            <div class="message-header">
+                <div class="message-icon">📢</div>
+                <div class="message-title">Pengumuman Admin</div>
+            </div>
+
             <p class="message-text">
-                Kepada seluruh pengguna <strong>TikSnap.io</strong> yang terhormat,<br><br>
-                Website saat ini sedang mengalami <strong style="color: var(--gold);">kendala teknis</strong> dan berada dalam proses pemeliharaan. Tim kami sedang bekerja keras untuk memperbaiki sistem.
+                Website sedang mengalami <span class="highlight">kendala teknis</span>. Tim kami sedang bekerja untuk memperbaikinya secepat mungkin.
             </p>
 
             <!-- Progress -->
-            <div class="progress-container">
-                <div class="progress-label">
+            <div class="progress-box">
+                <div class="progress-top">
                     <span>Progress Perbaikan</span>
-                    <span id="progressPercent">75%</span>
+                    <span id="progressNum">75%</span>
                 </div>
-                <div class="progress-bar">
+                <div class="progress-track">
                     <div class="progress-fill"></div>
                 </div>
             </div>
 
-            <!-- Features Being Fixed -->
-            <div class="features">
+            <!-- Features Status -->
+            <div class="features-list">
                 <div class="feature-item">
                     <div class="feature-icon">🔧</div>
                     <div class="feature-text">Server</div>
+                    <span class="feature-status">Proses</span>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">🔐</div>
                     <div class="feature-text">Keamanan</div>
+                    <span class="feature-status">Proses</span>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">⚡</div>
                     <div class="feature-text">API</div>
+                    <span class="feature-status">Proses</span>
                 </div>
             </div>
 
-            <!-- Admin Section -->
-            <div class="admin-section">
+            <!-- Admin -->
+            <div class="admin-box">
                 <p class="admin-label">Disampaikan oleh</p>
-                <div class="admin-card">
+                <div class="admin-profile">
                     <div class="admin-avatar">Z&F</div>
                     <div class="admin-info">
-                        <p class="admin-name">Admin TikSnap.io</p>
-                        <p class="admin-role">Development Team - ZAI & FRENDY</p>
+                        <p class="admin-name">Admin TikSnap</p>
+                        <p class="admin-role">ZAI & FRENDY</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="footer">
-            <p>Hubungi kami: <a href="https://github.com/rensiiw" target="_blank">@rensiiw</a></p>
-            <p style="margin-top: 10px;">© 2024 TikSnap.io - All Rights Reserved</p>
+            <a href="https://github.com/rensiiw" target="_blank">@rensiiw</a> • © 2024 TikSnap.io
         </div>
     </div>
 
     <script>
-        // Create Particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            const particleCount = 30;
+        // Mobile-Optimized Particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = window.innerWidth < 768 ? 15 : 25;
 
-            for (let i = 0; i < particleCount; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 8 + 's';
-                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
-                
-                // Random colors
-                const colors = ['#10b981', '#d4af37', '#14b8a6'];
-                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-                particle.style.width = (Math.random() * 4 + 2) + 'px';
-                particle.style.height = particle.style.width;
-                
-                container.appendChild(particle);
-            }
+        for (let i = 0; i < particleCount; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            const size = Math.random() * 3 + 1;
+            p.style.width = `${size}px`;
+            p.style.height = `${size}px`;
+            p.style.left = `${Math.random() * 100}%`;
+            p.style.animationDelay = `${Math.random() * 10}s`;
+            p.style.background = Math.random() > 0.5 ? '#10b981' : '#d4af37';
+            particlesContainer.appendChild(p);
         }
 
-        // Typing Effect
-        function typeWriter(element, text, speed = 50) {
-            let i = 0;
-            element.innerHTML = '';
-            function type() {
-                if (i < text.length) {
-                    element.innerHTML += text.charAt(i);
-                    i++;
-                    setTimeout(type, speed);
-                }
-            }
-            type();
-        }
-
-        // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
-            createParticles();
-            
-            // Animate progress number
-            const progressEl = document.getElementById('progressPercent');
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 1;
-                if (progress >= 75) {
-                    clearInterval(interval);
-                    progress = 75;
-                }
-                progressEl.textContent = progress + '%';
-            }, 30);
-        });
+        // Animate Progress Number
+        let p = 0;
+        const el = document.getElementById('progressNum');
+        const timer = setInterval(() => {
+            p += 1;
+            if(p >= 75) clearInterval(timer);
+            el.textContent = p + '%';
+        }, 25);
     </script>
 </body>
 </html>
