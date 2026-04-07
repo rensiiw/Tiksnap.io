@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikSnap.io - Maintenance</title>
+    
     <meta name="theme-color" content="#0a0f0d">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
